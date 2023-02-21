@@ -6,7 +6,7 @@ __pycache__/
 #Files
 *.pt
 ./app/files/models/frozen_inference_graph.pb
-
+./ui/results/*
 # C extensions
 *.so
 
