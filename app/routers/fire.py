@@ -1,8 +1,7 @@
 import io
 import json
-import torch
 from fastapi import File, APIRouter
-
+import base64
 
 from PIL import Image
 from starlette.middleware import Middleware
@@ -10,8 +9,6 @@ from starlette.middleware.cors import CORSMiddleware
 
 from ..files.segmentation import get_image_from_bytes, get_yolov5
 
-
-# from fastapi.middleware.cors import CORSMiddleware
 
 
 model = get_yolov5()
@@ -32,10 +29,6 @@ router = APIRouter(
 )
 
 
-
-
-
-
 # @api_app.post("/save_file")
 # async def upload_file(myfile: bytes = File(...)):
 #     return {"size" : len(myfile)}
@@ -48,14 +41,14 @@ router = APIRouter(
 async def detect_fire_return_json_result(file: bytes = File(...)):
     input_image = get_image_from_bytes(file)
     results = model(input_image)
-    detect_res = results.pandas().xyxy[0].to_json(orient="records")  # JSON img1 predictions
+    detect_res = results.pandas().xyxy[0].to_json(
+        orient="records")  
     detect_res = json.loads(detect_res)
     return {"result": detect_res}
 
-import base64
 
-@router.post("/object-to-img")
-async def detect_fire_return_img(file: bytes =  File(...)):
+@router.post("/object-to-base64")
+async def detect_fire_return_img(file: bytes = File(...)):
     input_image = get_image_from_bytes(file)
     results = model(input_image)
     results.render()
@@ -66,4 +59,3 @@ async def detect_fire_return_img(file: bytes =  File(...)):
         img_base64 = base64.b64encode(bytes_io.getvalue())
     return {"img_base64": img_base64}
     # return Response(content=bytes_io.getvalue(), media_type="image/jpeg")
-

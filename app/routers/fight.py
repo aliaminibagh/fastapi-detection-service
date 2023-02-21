@@ -1,17 +1,13 @@
-import io
-import json
 
-from fastapi import FastAPI, File, APIRouter
+from fastapi import APIRouter
 
 
-from PIL import Image
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 
-from ..files.segmentation import get_image_from_bytes, get_yolov5
+from ..files.segmentation import get_yolov5
 
 
-# from fastapi.middleware.cors import CORSMiddleware
 
 
 model = get_yolov5()

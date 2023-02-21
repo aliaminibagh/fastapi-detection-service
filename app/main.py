@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from .routers import fire, knife, arms, fight, emotions
+from .routers import fire, knife, arms, fight, emotions, human
 
 
 api_app  = FastAPI(
@@ -20,6 +20,7 @@ api_app.include_router(knife.router)
 api_app.include_router(arms.router)
 api_app.include_router(fight.router)
 api_app.include_router(emotions.router)
+api_app.include_router(human.router)
 # origins = ["*"]
 
 # app.add_middleware(
@@ -39,3 +40,7 @@ app.mount("/", StaticFiles(directory="./ui", html=True), name="ui")
 @api_app.get("/", include_in_schema=False)
 async def root():
     return RedirectResponse(url=f"/api/docs/", status_code=303)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,7 +1,7 @@
 import io
 import json
 
-from fastapi import FastAPI, File, APIRouter
+from fastapi import File, APIRouter
 
 
 from PIL import Image
