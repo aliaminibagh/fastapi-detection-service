@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 #Files
-Fire/app/model/best.pt
+*.pt
 
 # C extensions
 *.so

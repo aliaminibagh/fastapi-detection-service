@@ -50,7 +50,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/api/object-to-img',
+            url: '/api/fire/object-to-img',
             //dataType: 'json', //not sure but works for me without this
             data: formData,
             contentType: false, //this is requireded please see answers above

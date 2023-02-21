@@ -6,7 +6,7 @@ from PIL import Image
 
 def get_yolov5():
     # local best.pt
-    model = torch.hub.load('./app/yolov5/', 'custom', path='./app/model/best.pt', source='local')  # local repo
+    model = torch.hub.load('./app/files/yolov5/', 'custom', path='./app/files/model/fire.pt', source='local')  # local repo
     model.conf = 0.25
     return model
 
