@@ -1,9 +1,7 @@
-import io
 import json
 import uuid
 
-from fastapi import APIRouter, File, Response
-from PIL import Image
+from fastapi import APIRouter, File
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 
@@ -51,31 +49,4 @@ async def knife_detection_infer_json(file: bytes = File(...)):
     detect_res = json.loads(detect_res)
     return {"result": detect_res}
 
-import base64
-
-
-@router.post("/object-to-base64")
-async def detect_fire_return_img(file: bytes =  File(...)):
-    input_image = get_image_from_bytes(file)
-    results = model(input_image)
-    results.render()
-    for img in results.ims:
-        bytes_io = io.BytesIO()
-        img_base64 = Image.fromarray(img)
-        img_base64.save(bytes_io, format="jpeg")
-        img_base64 = base64.b64encode(bytes_io.getvalue())
-    return {"img_base64": img_base64}
-    # return Response(content=bytes_io.getvalue(), media_type="image/jpeg")
-
-@router.post("/object-to-img")
-async def detect_fire_return_img(file: bytes = File(...)):
-    input_image = get_image_from_bytes(file)
-    results = model(input_image)
-    results.render()
-    for img in results.ims:
-        bytes_io = io.BytesIO()
-        img_base64 = Image.fromarray(img)
-        img_base64.save(bytes_io, format="jpeg")
-        img_base64 = base64.b64encode(bytes_io.getvalue())
-    return Response(content=bytes_io.getvalue(), media_type="image/jpeg")
 

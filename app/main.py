@@ -6,8 +6,8 @@ from .routers import arms, emotions, fight, fire, human, knife, smoke
 
 api_app = FastAPI(
     # middleware=middleware,
-    title="Fire Detection API Service",
-    description="""Fire Detection Service""",
+    title="Object Detection API Service",
+    description="""This is a set of APIs for object detection.""",
     version="0.0.1",
     contact={
         "name": "Ali Amini Bagh",
@@ -16,7 +16,7 @@ api_app = FastAPI(
 )
 
 api_app.include_router(knife.router)
-api_app.include_router(fire.router)
+api_app.include_router(fire.router,)
 api_app.include_router(arms.router)
 api_app.include_router(fight.router)
 api_app.include_router(emotions.router)

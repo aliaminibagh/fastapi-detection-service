@@ -50,7 +50,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/api/fire/object-to-base64',
+            url: '/api/fire/infer-image',
             //dataType: 'json', //not sure but works for me without this
             data: formData,
             contentType: false, //this is requireded please see answers above
@@ -60,7 +60,9 @@ $(document).ready(function () {
                 alert('Error');
             },
             success: function (data) {
-                $("#resultbox").attr("src", 'data:image/jpeg;base64,' + data.img_base64);
+                // $("#resultbox").attr("src", 'data:image/jpeg;base64,' + data.img_base64);
+                console.log(data);
+                $("#resultbox").attr("src", data.result);
                 $('#RunButton').toggleClass('is-loading');
             },
         });
