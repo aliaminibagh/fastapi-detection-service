@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from .routers import fire, knife, arms, fight, emotions, human
+from fastapi.staticfiles import StaticFiles
 
+from .routers import arms, emotions, fight, fire, human, knife, smoke
 
-api_app  = FastAPI(
+api_app = FastAPI(
     # middleware=middleware,
     title="Fire Detection API Service",
     description="""Fire Detection Service""",
@@ -15,12 +15,14 @@ api_app  = FastAPI(
     }
 )
 
-api_app.include_router(fire.router)
 api_app.include_router(knife.router)
+api_app.include_router(fire.router)
 api_app.include_router(arms.router)
 api_app.include_router(fight.router)
 api_app.include_router(emotions.router)
 api_app.include_router(human.router)
+api_app.include_router(smoke.router)
+
 # origins = ["*"]
 
 # app.add_middleware(

@@ -1,6 +1,6 @@
+import cv2
 import numpy as np
 import tensorflow.compat.v1 as tf
-import cv2
 
 
 class DetectorAPI:
@@ -61,13 +61,14 @@ class DetectorAPI:
 def get_image_with_cv2(binary_image):
     nparr = np.frombuffer(binary_image, np.uint8)
     input_image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    cv2.resize(input_image, (1280, 720), interpolation=cv2.INTER_AREA)
+    # cv2.resize(input_image, (1280, 720), interpolation=cv2.INTER_AREA)
     return input_image
 
 
 def draw_bounding_box_on_image(image, boxes, scores, classes, threshold=0.7):
     for i in range(len(boxes)):
         # Class 1 represents human
+        print(classes)
         if classes[i] == 1 and scores[i] > threshold:
             box = boxes[i]
             image = cv2.rectangle(

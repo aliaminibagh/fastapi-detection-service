@@ -1,11 +1,16 @@
 
-from fastapi import APIRouter, File
+import uuid
+
+import cv2 as cv
 import torch
-from torchvision import transforms
+from fastapi import APIRouter, File
+from mtcnn_cv2 import MTCNN
+# from mtcnn import MTCNN
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
-from mtcnn_cv2 import MTCNN
-from ..files.Human_detection import get_image_with_cv2, draw_bounding_box_on_image
+from torchvision import transforms
+
+from ..files.Human_detection import get_image_with_cv2
 from ..files.segmentation import infer_emotions
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -46,10 +51,22 @@ router = APIRouter(
 )
 
 
-@router.post("/object-to-json")
-async def detect_emotions_return_json_result(file: bytes = File(...)):
+@router.post("/infer-image")
+async def emotion_detection_infer_image(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
-    results = infer_emotions(input_image, emotion_model,idx_to_class, test_transforms,device, detector)
+    results, image = infer_emotions(input_image, emotion_model,idx_to_class, test_transforms,device, detector)
+    if len(results) == 0:
+        return {"message": "No faces detected"}
+    else:
+        ID = uuid.uuid4()
+        cv.imwrite(f"./ui/results/{ID}.jpg", image)
+        return {"result": f"ui/results/{ID}.jpg"}
+
+
+@router.post("/infer-json")
+async def emotion_detection_infer_json(file: bytes = File(...)):
+    input_image = get_image_with_cv2(file)
+    results, image = infer_emotions(input_image, emotion_model,idx_to_class, test_transforms,device, detector)
     if len(results) == 0:
         return {"message": "No faces detected"}
     return ({f'Face_{num+1}': i['box'], 'Confidence': round(i['confidence'], 4), 'Emotion': i['emotion']} for num, i in enumerate(results))

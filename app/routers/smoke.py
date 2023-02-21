@@ -1,57 +1,52 @@
-import base64
 import io
-import json
 import uuid
 
+import cv2
 from fastapi import APIRouter, File, Response
 from PIL import Image
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
 
-from ..files.segmentation import get_image_from_bytes, get_yolov5
+from ..files.Human_detection import get_image_with_cv2
+from ..files.segmentation import get_image_from_bytes, get_yolov8
 
-# from fastapi.middleware.cors import CORSMiddleware
+idx_to_class = {0.0:"fire", 1.0: "default", 2.0: "smoke"}
 
 
-model = get_yolov5(name="arms")
+model = get_yolov8()
 
-middleware = [
-    Middleware(
-        CORSMiddleware,
-        allow_origins=['*'],
-        allow_credentials=True,
-        allow_methods=['*'],
-        allow_headers=['*']
-    )
-]
+
 
 router = APIRouter(
-    prefix="/arms",
-    tags=["arms"],
+    prefix="/smoke",
+    tags=["smoke"],
 )
 
 
 @router.post("/infer-image")
-async def fire_detection_infer_image(file: bytes = File(...)):
-    input_image = get_image_from_bytes(file)
+async def smoke_detection_infer_image(file: bytes = File(...)):
+    input_image = get_image_with_cv2(file)
     results = model(input_image)
-    results.render()
+    # results.render()
     ID = uuid.uuid4()
-    results.save(save_dir=f"./ui/results/{ID}")
-    return {"result": f"ui/results/{ID}/image0.jpg"}
-
+    boxes = results[0].boxes.data.tolist()
+    for box in boxes:
+        cv2.rectangle(input_image, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (36,255,12), 2)
+        cv2.putText(input_image, idx_to_class[int(box[5])], (int(box[0] + 10), int(box[1]+20)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 1)
+    cv2.imwrite(f"./ui/results/{ID}.jpg", input_image)
+    return {"result": f"ui/results/{ID}.jpg"}
 
 @router.post("/infer-json")
-async def fire_detection_infer_json(file: bytes = File(...)):
+async def smoke_detection_infer_json(file: bytes = File(...)):
     input_image = get_image_from_bytes(file)
-    results = model(input_image)
-    detect_res = results.pandas().xyxy[0].to_json(orient="records")
-    detect_res = json.loads(detect_res)
-    return {"result": detect_res}
+    results = model.predict(source=input_image)
+    boxes = results[0].boxes.data.tolist()
+    return {"result": [{"x_min" : box[0], "y_min" : box[1],"x_max" : box[2],"y_max" : box[3], "conf": round(box[4], 3), "class":idx_to_class[box[5]]} for box in boxes]}
+
+
+import base64
 
 
 @router.post("/object-to-base64")
-async def detect_fire_return_img(file: bytes = File(...)):
+async def detect_fire_return_img(file: bytes =  File(...)):
     input_image = get_image_from_bytes(file)
     results = model(input_image)
     results.render()
@@ -62,7 +57,6 @@ async def detect_fire_return_img(file: bytes = File(...)):
         img_base64 = base64.b64encode(bytes_io.getvalue())
     return {"img_base64": img_base64}
     # return Response(content=bytes_io.getvalue(), media_type="image/jpeg")
-
 
 @router.post("/object-to-img")
 async def detect_fire_return_img(file: bytes = File(...)):
@@ -75,3 +69,4 @@ async def detect_fire_return_img(file: bytes = File(...)):
         img_base64.save(bytes_io, format="jpeg")
         img_base64 = base64.b64encode(bytes_io.getvalue())
     return Response(content=bytes_io.getvalue(), media_type="image/jpeg")
+
