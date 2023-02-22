@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,9 @@
     <title>Vision Services</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="ui.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,7 +21,7 @@
             <form action="/api/save_file" method="post" name="f1" id="f1">
                 <input type="file" name="file" id="file">
                 <input type="submit" value="Submit">
-              </form> 
+            </form>
         </div>
         <div class="column">
             <div class="rows">
@@ -38,7 +41,7 @@
                                 <span class="file-name">
                                     Screen Shot 2017-07-29 at 15.54.25.png
                                 </span>
-                                <input type="submit" value="Submit Comment" /> 
+                                <input type="submit" value="Submit Comment" />
                             </form>
 
                         </label>
@@ -56,18 +59,40 @@
                             <li><a>تشخیص انسان</a></li>
                         </ul>
                     </div>
-                    <div>
-                        <section class="tab-content">مدل تشخیص چاقو</section>
-                        <section class="tab-content">مدل تشخیص اسلحه</section>
-                        <section class="tab-content">مدل تشخیص درگیری</section>
-                        <section class="tab-content">مدل تشخیص آتش</section>
-                        <section class="tab-content">مدل تشخیص دود</section>
-                        <section class="tab-content">مدل تشخیص احساسات</section>
-                        <section class="tab-content">مدل تشخیص انسان</section>
+                    <div dir="rtl" style="color: red; font-size: 20px">
+                        <section class="tab-content">مدل تشخیص چاقو
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص چاقو
+                                محل قرارگیری چاقو را در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص اسلحه
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص اسلحه
+                                محل قرارگیری اسلحه را در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص درگیری
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص درگیری
+                                ,وجود درگیری را در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص آتش
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص آتش
+                                ,وجود آتش را در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص دود
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص دود
+                                ,وجود دود را در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص احساسات
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص
+                                احساسات ,احساسات مربوط به هر فرد در تصویر مشخص کرد.</p>
+                        </section>
+                        <section class="tab-content">مدل تشخیص انسان
+                            <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص انسان
+                                ,وجود انسان را در تصویر مشخص کرد.</p>
+                        </section>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 50px">
-                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered">نمایش خروجی</button>
+                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered">نمایش
+                        خروجی</button>
                 </div>
                 <div class="row" style="margin-top: 50px">
                     <img name="resultbox" id="resultbox">
