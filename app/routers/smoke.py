@@ -23,7 +23,6 @@ router = APIRouter(
 async def smoke_detection_infer_image(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
     results = model(input_image)
-    # results.render()
     ID = uuid.uuid4()
     boxes = results[0].boxes.data.tolist()
     for box in boxes:
