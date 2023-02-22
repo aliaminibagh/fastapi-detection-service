@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import tensorflow.compat.v1 as tf
 
@@ -7,7 +6,6 @@ class DetectorAPI:
     def __init__(self, path_to_ckpt="./app/files/model/frozen_inference_graph.pb"):
         self.path_to_ckpt = path_to_ckpt
         tf.disable_v2_behavior()
-
         self.detection_graph = tf.Graph()
         with self.detection_graph.as_default():
             od_graph_def = tf.compat.v1.GraphDef()
@@ -56,21 +54,3 @@ class DetectorAPI:
     def close(self):
         self.sess.close()
         self.default_graph.close()
-
-
-def get_image_with_cv2(binary_image):
-    nparr = np.frombuffer(binary_image, np.uint8)
-    input_image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    # cv2.resize(input_image, (1280, 720), interpolation=cv2.INTER_AREA)
-    return input_image
-
-
-def draw_bounding_box_on_image(image, boxes, scores, classes, threshold=0.7):
-    for i in range(len(boxes)):
-        # Class 1 represents human
-        print(classes)
-        if classes[i] == 1 and scores[i] > threshold:
-            box = boxes[i]
-            image = cv2.rectangle(
-                image, (box[1], box[0]), (box[3], box[2]), (255, 0, 0), 2)
-    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

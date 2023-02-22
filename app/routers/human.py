@@ -3,8 +3,8 @@ import uuid
 import cv2 as cv
 from fastapi import APIRouter, File
 
-from ..files.Human_detection import (DetectorAPI, draw_bounding_box_on_image,
-                                     get_image_with_cv2)
+from ..files.human_utils import DetectorAPI
+from ..files.utils import draw_bounding_box_on_image, get_image_with_cv2
 
 human_model = DetectorAPI()
 
@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.post("/infer-image")
+@router.post("/infer-image", summary='Detect humans in image and return marked image', response_description="Something here")
 async def human_detection_infer_image(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
     boxes, scores, classes, _ = human_model.processFrame(input_image)
@@ -26,7 +26,8 @@ async def human_detection_infer_image(file: bytes = File(...)):
     cv.imwrite(f"./ui/results/{ID}.jpg", result)
     return {"result": f"ui/results/{ID}.jpg"}
 
-@router.post("/infer-json")
+
+@router.post("/infer-json", summary='Detect humans in image and return json', response_description="Something here")
 async def human_detection_infer_json(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
     boxes, scores, _, num = human_model.processFrame(input_image)

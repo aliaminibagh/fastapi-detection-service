@@ -1,28 +1,8 @@
-import io
 
 import cv2
 import numpy as np
 import torch
 from PIL import Image
-from ultralytics import YOLO
-
-
-def get_yolov5(name):
-    # local best.pt
-    model = torch.hub.load('ultralytics/yolov5', 'custom',
-                           path=f'./app/files/model/{name}.pt')  # local repo
-    model.conf = 0.25
-    return model
-
-
-def get_yolov8():
-    model = YOLO('./app/files/model/smoke.pt')
-    return model
-
-
-def get_image_from_bytes(binary_image):
-    input_image = Image.open(io.BytesIO(binary_image)).convert("RGB")
-    return input_image
 
 
 def infer_emotions(image, emotion_model, idx_to_class, test_transforms, device, detector):
