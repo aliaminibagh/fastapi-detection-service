@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa-IR" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
@@ -18,34 +18,18 @@
 <body>
     <div class="columns" style="margin-top: 50px">
         <div class="column">
-            <form action="/api/save_file" method="post" name="f1" id="f1">
-                <input type="file" name="file" id="file">
-                <input type="submit" value="Submit">
-            </form>
+
         </div>
-        <div class="column">
+        <div class="column" id="column-orginal">
             <div class="rows">
                 <div class="row">
-                    <div class="file has-name is-boxed is-centered">
-                        <label class="file-label">
-                            <form name="dataform" id="dataform" action="/api/save_file" method="post">
-                                <input class="file-input" type="file" name="myfile" id="myfile">
-                                <span class="file-cta">
-                                    <span class="file-icon">
-                                        <i class="fas fa-upload"></i>
-                                    </span>
-                                    <span class="file-label">
-                                        Choose a file…
-                                    </span>
-                                </span>
-                                <span class="file-name">
-                                    Screen Shot 2017-07-29 at 15.54.25.png
-                                </span>
-                                <input type="submit" value="Submit Comment" />
-                            </form>
-
+                    <form action="/api/save_file" method="post" name="f1" id="f1">
+                        <label for="file" class="custom-file-upload" style="font-family: ;">
+                             انتخاب فایل
                         </label>
-                    </div>
+                        <input type="file" required name="file" id="file">
+                        <!-- <input type="submit" value="Submit"> -->
+                    </form>
                 </div>
                 <div class="row" id="tabs-with-content" style="margin-top: 50px">
                     <div class="tabs is-centered">
@@ -57,6 +41,8 @@
                             <li><a>دود</a></li>
                             <li><a>احساسات</a></li>
                             <li><a>تشخیص انسان</a></li>
+                            <li><a>تشخیص چهره</a></li>
+                            <li><a>تشخیص پلاک</a></li
                         </ul>
                     </div>
                     <div dir="rtl" style="color: red; font-size: 20px">
@@ -88,10 +74,12 @@
                             <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص انسان
                                 ,وجود انسان را در تصویر مشخص کرد.</p>
                         </section>
+                        <section class="tab-content">مدل تشخیص چهره</section>
+                        <section class="tab-content">مدل تشخیص پلاک</section>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 50px">
-                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered">نمایش
+                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered" style="font-family: vazir;">نمایش
                         خروجی</button>
                 </div>
                 <div class="row" style="margin-top: 50px">

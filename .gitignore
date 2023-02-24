@@ -8,6 +8,8 @@ __pycache__/
 *.mp4
 app/files/models/frozen_inference_graph.pb
 ui/results/
+
+ui/fonts/*.zip
 # C extensions
 *.so
 

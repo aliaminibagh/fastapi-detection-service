@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 
 from .routers import arms, emotions, fight, fire, human, knife, smoke
 
+from .routers import video, plate, face
+
 api_app = FastAPI(
     # middleware=middleware,
     title="Object Detection API Service",
@@ -22,6 +24,9 @@ api_app.include_router(fight.router)
 api_app.include_router(emotions.router)
 api_app.include_router(human.router)
 api_app.include_router(smoke.router)
+# api_app.include_router(video.router)
+api_app.include_router(plate.router)
+api_app.include_router(face.router)
 
 # origins = ["*"]
 

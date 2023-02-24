@@ -1,5 +1,19 @@
 $(document).ready(function () {
 
+    // create a list of URLs
+    var urls = [
+        '/api/knife/infer-image',
+        '/api/arms/infer-image',
+        '/api/fight/infer-image',
+        '/api/fire/infer-image',
+        '/api/smoke/infer-image',
+        '/api/emotions/infer-image',
+        '/api/human/infer-image',
+        '/api/face/infer-image',
+        '/api/Plate/infer-image',
+    ]
+    selectedApi = urls[0];
+
     $("form#f1").submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -20,11 +34,9 @@ $(document).ready(function () {
         });
     });
 
-
     $("#RunButton").click(function () {
         $('#RunButton').toggleClass('is-loading');
         var form = $("form#f1");
-
         // you can't pass Jquery form it has to be javascript form object
         var formData = new FormData(form[0]);
 
@@ -50,7 +62,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/api/fire/infer-image',
+            url: selectedApi,
             //dataType: 'json', //not sure but works for me without this
             data: formData,
             contentType: false, //this is requireded please see answers above
@@ -88,6 +100,8 @@ $(document).ready(function () {
 
         let activateTabsContent = function (tab) {
             tabsContent[getIndex(tab)].classList.add('is-active');
+            // log the index of the tab
+            selectedApi = urls[getIndex(tab)];
         };
 
         let getIndex = function (el) {
