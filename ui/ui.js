@@ -14,25 +14,25 @@ $(document).ready(function () {
     ]
     selectedApi = urls[0];
 
-    $("form#f1").submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
+    // $("form#f1").submit(function (e) {
+    //     e.preventDefault();
+    //     var formData = new FormData(this);
 
-        $.ajax({
-            url: '/api/save_file',
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                alert(JSON.stringify(data))
-            },
-            fail: function (data) {
-                console.log(data);
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    });
+    //     $.ajax({
+    //         url: '/api/save_file',
+    //         type: 'POST',
+    //         data: formData,
+    //         success: function (data) {
+    //             alert(JSON.stringify(data))
+    //         },
+    //         fail: function (data) {
+    //             console.log(data);
+    //         },
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false
+    //     });
+    // });
 
     $("#RunButton").click(function () {
         $('#RunButton').toggleClass('is-loading');
@@ -74,7 +74,8 @@ $(document).ready(function () {
             success: function (data) {
                 // $("#resultbox").attr("src", 'data:image/jpeg;base64,' + data.img_base64);
                 console.log(data);
-                $("#resultbox").attr("src", data.result);
+                $("#resultbox").attr("src", data.image);
+                $("#jsonbox").val(JSON.stringify(data.result));
                 $('#RunButton').toggleClass('is-loading');
             },
         });
