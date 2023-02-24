@@ -24,11 +24,12 @@ input[type="file"] {
   background-color: #DDD;
 }
 
-.custom-file-upload:hover {
-  background-color: rgb(62, 206, 194);
+.custom-file-upload:hover, #RunButton:hover {
+  background-color: rgb(56, 66, 65);
   color: white;
-
 }
+
+
 
 @font-face {
   font-family: vazir;
@@ -40,9 +41,16 @@ input[type="file"] {
     url("fonts/Vazir-Regular.woff2") format("woff2");
 }
 
+body{
+  background-image: radial-gradient(circle farthest-side, #fceabb, #f8b500);
+}
+
 #column-orginal {
   font-family: vazir;
   direction: rtl;
   background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
 }
 
+textarea {
+  color: rgb(189, 36, 36);
+    }

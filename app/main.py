@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .routers import arms, emotions, fight, fire, human, knife, smoke
 
-from .routers import video, plate, face
+from .routers import plate, face, yolov8
 
 api_app = FastAPI(
     # middleware=middleware,
@@ -24,9 +24,9 @@ api_app.include_router(fight.router)
 api_app.include_router(emotions.router)
 api_app.include_router(human.router)
 api_app.include_router(smoke.router)
-# api_app.include_router(video.router)
 api_app.include_router(plate.router)
 api_app.include_router(face.router)
+api_app.include_router(yolov8.router)
 
 # origins = ["*"]
 
@@ -50,4 +50,4 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8001, reload=True)

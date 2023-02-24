@@ -9,8 +9,9 @@ $(document).ready(function () {
         '/api/smoke/infer-image',
         '/api/emotions/infer-image',
         '/api/human/infer-image',
+        '/api/yolov8/infer-image',
         '/api/face/infer-image',
-        '/api/Plate/infer-image',
+        '/api/Plate/infer-image'
     ]
     selectedApi = urls[0];
 

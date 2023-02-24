@@ -15,9 +15,18 @@ def get_yolov5(name):
     return model
 
 
-def get_yolov8():
-    model = YOLO('./app/files/model/smoke.pt')
+def get_yolov8(name = "yolov8x"):
+    #local model
+    if name == "smoke" :
+        model = YOLO('./app/files/model/smoke.pt')
+    elif name == "yolov8n":
+        model = YOLO('./app/files/model/yolov8n.pt')
+    elif name == "yolov8m":
+        model = YOLO('./app/files/model/yolov8m.pt')
+    else:
+        model = YOLO('./app/files/model/yolov8x.pt')
     return model
+
 
 
 def get_image_from_bytes(binary_image):
