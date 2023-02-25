@@ -7,7 +7,7 @@ __pycache__/
 *.pt
 *.mp4
 app/files/models/frozen_inference_graph.pb
-ui/results/
+ui/results/*
 
 ui/fonts/*.zip
 # C extensions

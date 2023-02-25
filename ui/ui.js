@@ -1,23 +1,23 @@
 $(document).ready(function () {
-    $('#file').change(function() {
+    $('#file').change(function () {
         var i = $(this).prev('label').clone();
         var file = $('#file')[0].files[0].name;
         $(this).prev('label').text(file);
-      });
+    });
 
-    
+
     // create a list of URLs
     var urls = [
-        '/api/knife/infer-image',
-        '/api/arms/infer-image',
-        '/api/fight/infer-image',
-        '/api/fire/infer-image',
-        '/api/smoke/infer-image',
-        '/api/emotions/infer-image',
-        '/api/human/infer-image',
-        '/api/yolov8/infer-image',
-        '/api/face/infer-image',
-        '/api/plate/infer-image'
+        '/api/knife/infer-',
+        '/api/arms/infer-',
+        '/api/fight/infer-',
+        '/api/fire/infer-',
+        '/api/smoke/infer-',
+        '/api/emotions/infer-',
+        '/api/human/infer-',
+        '/api/yolov8/infer-',
+        '/api/face/infer-',
+        '/api/plate/infer-'
     ]
     selectedApi = urls[0];
 
@@ -67,6 +67,8 @@ $(document).ready(function () {
         //     });
         // //}
 
+        // if isvideo radio button is checked, change selectedApi to /api/video, else change it to /api/image
+
         $.ajax({
             type: "POST",
             url: selectedApi,
@@ -81,30 +83,41 @@ $(document).ready(function () {
             success: function (data) {
                 // $("#resultbox").attr("src", 'data:image/jpeg;base64,' + data.img_base64);
                 console.log(data);
-                $("#resultbox").attr("src", data.image);
-                $("#jsonbox").val(JSON.stringify(data.result));
+                console.log(JSON.stringify(data));
+                // if is_video is true, show the video, else show the image
+                if (is_video) {
+                    $("#videobox").attr("src", data.video);
+                    $("#resultbox").attr("src", "");
+                }
+                else {
+                    $("#videobox").attr("src", "");
+                    $("#resultbox").attr("src", data.image);
+                }
+
+                // $("#resultbox").attr("src", data.image);
+                // $("#jsonbox").val(JSON.stringify(data.result));
                 $('#RunButton').toggleClass('is-loading');
             },
         });
 
     });
 
-var input = document.getElementById( 'file' );
-var infoArea = document.getElementById( 'file-upload-filename' );
+    var input = document.getElementById('file');
+    var infoArea = document.getElementById('file-upload-filename');
 
-input.addEventListener( 'change', showFileName );
+    input.addEventListener('change', showFileName);
 
-function showFileName( event ) {
-  
-  // the change event gives us the input it occurred in 
-  var input = event.srcElement;
-  
-  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-  var fileName = input.files[0].name;
-  
-  // use fileName however fits your app best, i.e. add it into a div
-  infoArea.textContent = 'اسم فایل : ' + fileName;
-}
+    function showFileName(event) {
+
+        // the change event gives us the input it occurred in 
+        var input = event.srcElement;
+
+        // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+        var fileName = input.files[0].name;
+
+        // use fileName however fits your app best, i.e. add it into a div
+        infoArea.textContent = 'اسم فایل : ' + fileName;
+    }
 
     let tabsWithContent = (function () {
         let tabs = document.querySelectorAll('.tabs li');
@@ -126,6 +139,13 @@ function showFileName( event ) {
             tabsContent[getIndex(tab)].classList.add('is-active');
             // log the index of the tab
             selectedApi = urls[getIndex(tab)];
+            is_video = $('#isvideo').is(':checked');
+            if (is_video) {
+                selectedApi = selectedApi + 'video';
+            }
+            else {
+                selectedApi = selectedApi + 'image';
+            }
         };
 
         let getIndex = function (el) {

@@ -36,7 +36,8 @@ async def smoke_detection_infer_json(file: bytes = File(...)):
 
 @router.post("/infer-video", summary='Detect smoke in video and return json', response_description="Something here")
 async def smoke_detection_infer_json(file: UploadFile = File(...)):
+    return {"video": "/results/466251db-fb4e-49c2-bb4d-473775e84c68.mp4"}
     input_video, filename = get_video_from_bytes(file)
-    detector = OD(capture_index=filename, model=model)
+    detector = OD(capture_index=filename, model_name="smoke", yolo_version="eight")
     video_path = detector()
     return {"video": video_path}

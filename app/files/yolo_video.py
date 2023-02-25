@@ -1,14 +1,17 @@
 import uuid
-import torch
-import numpy as np
-import cv2
 from time import time
 
-class OD:
-    def __init__(self, capture_index, model):
+import cv2
+import numpy as np
+import torch
+from ultralytics import YOLO
+
+
+class OD():
+    def __init__(self, capture_index, model_name, yolo_version="five"):
         self.capture_index = capture_index
-        # self.model = self.load_model(model_name)
-        self.model = model
+        self.yolo_version = yolo_version
+        self.model = self.load_model(model_name)
         self.classes = self.model.names
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
@@ -26,14 +29,27 @@ class OD:
     Loads Yolo5 model from pytorch hub.
     :return: Trained Pytorch model.
     """
-        # if model_name:
-        #     model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_name, force_reload=True)
-        # else:
-        #     model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-        # return model
-        model = torch.hub.load('ultralytics/yolov5', 'custom',
-                           path=f'./app/files/model/{model_name}.pt')
-        model.conf = 0.25
+        if model_name == "fire":
+                model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./app/files/model/fire.pt')
+                self.yolo_version = "five"
+        elif model_name == "knife":
+            model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./app/files/model/knife.pt')
+            self.yolo_version = "five"
+        elif model_name == "arms":
+            model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./app/files/model/arms.pt')
+            self.yolo_version = "five"
+        elif model_name == "smoke":
+            model = YOLO('./app/files/model/smoke.pt')
+            self.yolo_version = "eight"
+        elif model_name == "yolov8n":
+            model = YOLO('./app/files/model/yolov8n.pt')
+            self.yolo_version = "eight"
+        elif model_name == "yolov8m":
+            model = YOLO('./app/files/model/yolov8m.pt')
+            self.yolo_version = "eight"
+        else:
+            model = YOLO('./app/files/model/yolov8x.pt')
+            self.yolo_version = "eight"
         return model
     
 
@@ -46,9 +62,13 @@ class OD:
         self.model.to(self.device)
         frame = [frame]
         results = self.model(frame)
-        labels, cord = results.xyxyn[0][:, -1], results.xyxyn[0][:, :-1]
+        if self.yolo_version == "five":
+            labels, cord = results.xyxyn[0][:, -1], results.xyxyn[0][:, :-1]
+        else:
+            results = self.model(frame)
+            labels, cord = results[0].boxes.cls, torch.cat([results[0].boxes.xyxyn,results[0].boxes.conf.reshape(-1,1)], axis=1)
         return labels, cord
-        # return results
+            # return results
 
     def class_to_label(self, x):
         """
@@ -70,7 +90,7 @@ class OD:
         x_shape, y_shape = frame.shape[1], frame.shape[0]
         for i in range(n):
             row = cord[i]
-            if row[4] >= 0.3:
+            if row[4] >= 0.25:
                 x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
                 bgr = (0, 255, 0)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
@@ -98,9 +118,9 @@ class OD:
             count += 1
             print(100 * "-")
             print(f"Frame {count}")
-        
+            print(self.model.names)
             ret, frame = cap.read()
-    
+            print(self.yolo_version)
             
             if ret:
                 # frame = cv2.resize(frame, (640,640))

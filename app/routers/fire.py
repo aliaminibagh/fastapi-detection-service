@@ -34,6 +34,6 @@ async def fire_detection_infer_json(file: bytes = File(...)):
 @router.post("/infer-video", summary='Detect fire in video and return json', response_description="Something here")
 async def fire_detection_infer_json(file: UploadFile = File(...)):
     input_video, filename = get_video_from_bytes(file)
-    detector = OD(capture_index=filename, model=model)
+    detector = OD(capture_index=filename, model_name="fire")
     video_path = detector()
     return {"video": video_path}

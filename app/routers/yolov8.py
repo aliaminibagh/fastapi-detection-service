@@ -34,6 +34,6 @@ async def yolov8_detection_infer_json(file: bytes = File(...)):
 @router.post("/infer-video", summary='Detect objects in video and return json', response_description="Something here")
 async def yolov8_detection_infer_json(file: UploadFile = File(...)):
     input_video, filename = get_video_from_bytes(file)
-    detector = OD(capture_index=filename, model=model)
+    detector = OD(capture_index=filename, model_name= "yolov8x", yolo_version=8)
     video_path = detector()
     return {"video": video_path}
