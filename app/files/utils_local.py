@@ -6,6 +6,8 @@ import torch
 from PIL import Image
 from ultralytics import YOLO
 
+import tempfile
+
 
 def get_yolov5(name):
     # local best.pt
@@ -15,9 +17,9 @@ def get_yolov5(name):
     return model
 
 
-def get_yolov8(name = "yolov8x"):
-    #local model
-    if name == "smoke" :
+def get_yolov8(name="yolov8x"):
+    # local model
+    if name == "smoke":
         model = YOLO('./app/files/model/smoke.pt')
     elif name == "yolov8n":
         model = YOLO('./app/files/model/yolov8n.pt')
@@ -26,7 +28,6 @@ def get_yolov8(name = "yolov8x"):
     else:
         model = YOLO('./app/files/model/yolov8x.pt')
     return model
-
 
 
 def get_image_from_bytes(binary_image):
@@ -49,3 +50,24 @@ def draw_bounding_box_on_image(image, boxes, scores, classes, threshold=0.7):
             image = cv2.rectangle(
                 image, (box[1], box[0]), (box[3], box[2]), (255, 0, 0), 2)
     return image
+
+
+def get_video_from_bytes(binary_video):
+    try:
+        contents = binary_video.file.read()
+        with open(binary_video.filename, 'wb') as f:
+            f.write(contents)
+    except Exception:
+        return {"message": "There was an error uploading the file"}
+    finally:
+        binary_video.file.close()
+    return cv2.VideoCapture(binary_video.filename), binary_video.filename
+
+def get_video_from_bytes_temp(binary_video):
+    with tempfile.NamedTemporaryFile(suffix=".mp4") as tmp:
+        tmp.write(binary_video.file.read())
+        return cv2.VideoCapture(tmp.name), tmp.name
+
+
+
+

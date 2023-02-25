@@ -1,6 +1,8 @@
+import uuid
+import cv2
 import numpy as np
 import tensorflow.compat.v1 as tf
-
+from .utils_local import draw_bounding_box_on_image, get_video_from_bytes
 
 class DetectorAPI:
     def __init__(self, path_to_ckpt="./app/files/model/frozen_inference_graph.pb"):
@@ -54,3 +56,33 @@ class DetectorAPI:
     def close(self):
         self.sess.close()
         self.default_graph.close()
+
+
+def get_result_video(binary_video, model):
+    video, _ = get_video_from_bytes(binary_video)
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(video.get(cv2.CAP_PROP_FPS))
+    
+    # print number of frames in video
+    print(f"Number of frames: {video.get(cv2.CAP_PROP_FRAME_COUNT)}")
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    ID = uuid.uuid4()
+    print(f"ID: {ID}")
+    out = cv2.VideoWriter(f"./ui/results/{ID}.mp4", fourcc, fps, (width, height))
+    count = 0
+    while video.isOpened():
+        ret, frame = video.read()
+        if ret:
+            count += 1
+            print(100 * "-")
+            print(f"Frame: {count}")
+            boxes, scores, classes, num = model.processFrame(frame)
+            result = draw_bounding_box_on_image(frame, boxes, scores, classes)
+            out.write(result)
+            
+        else:
+            break
+    video.release()
+    out.release()
+    return f'/results/{ID}.mp4'

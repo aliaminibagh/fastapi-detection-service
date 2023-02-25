@@ -3,12 +3,13 @@ import uuid
 
 import cv2 as cv
 import torch
-from fastapi import APIRouter, File
+from fastapi import APIRouter, File, UploadFile
 from mtcnn_cv2 import MTCNN
 from torchvision import transforms
 
-from ..files.emotion_utils import infer_emotions
-from ..files.utils import get_image_with_cv2
+from ..files.emotion_utils import infer_emotions, get_result_video
+from ..files.utils_local import get_image_with_cv2
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 emotion_model = torch.load('./app/files/model/EmotionNet_b27.pt')
@@ -36,19 +37,6 @@ router = APIRouter(
 )
 
 
-# @router.post("/infer-image", summary='Detect emotions of faces in image and return marked image', response_description="Something here")
-# async def emotion_detection_infer_image(file: bytes = File(...)):
-#     input_image = get_image_with_cv2(file)
-#     results, image = infer_emotions(
-#         input_image, emotion_model, idx_to_class, test_transforms, device, detector)
-#     if len(results) == 0:
-#         return {"message": "No faces detected"}
-#     else:
-#         ID = uuid.uuid4()
-#         cv.imwrite(f"./ui/results/{ID}.jpg", image)
-#         return {"result": f"results/{ID}.jpg"}
-
-
 @router.post("/infer-image", summary='Detect emotions of faces in image and return json', response_description="Something here")
 async def emotion_detection_infer_json(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
@@ -61,3 +49,9 @@ async def emotion_detection_infer_json(file: bytes = File(...)):
         cv.imwrite(f"./ui/results/{ID}.jpg", image)
     # return ({f'Face_{num+1}': i['box'], 'Confidence': round(i['confidence'], 4), 'Emotion': i['emotion']} for num, i in enumerate(results))
         return {"result": [{'x_min': int(box[0]), 'y_min': int(box[1]), 'x_max': int(box[0] + box[2]), 'y_max': int(box[1] + box[3]), 'confidence': round(float(score), 3), 'emotion': emotion} for box, score, emotion in zip([i['box'] for i in results], [i['confidence'] for i in results], [i['emotion'] for i in results])], "image": f"/results/{ID}.jpg"}
+    
+
+@router.post("/infer-video", summary='Detect emotions of faces in video and return marked video', response_description="Something here")
+async def emotion_detection_infer_video(file: UploadFile = File(...)):
+    video_path = get_result_video(file, emotion_model, idx_to_class, test_transforms, device, detector)
+    return {"video": video_path}

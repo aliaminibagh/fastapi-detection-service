@@ -1,9 +1,10 @@
 import json
 import uuid
 
-from fastapi import APIRouter, File
+from fastapi import APIRouter, File, UploadFile
 
-from ..files.utils import get_image_from_bytes, get_yolov5
+from ..files.utils_local import get_image_from_bytes, get_yolov5, get_video_from_bytes
+from ..files.yolo_video import OD
 
 model = get_yolov5(name="arms")
 
@@ -25,3 +26,10 @@ async def pistol_detection_infer_json(file: bytes = File(...)):
     ID = uuid.uuid4()
     results.save(save_dir=f"./ui/results/{ID}")
     return {"result": detect_res, "image": f"/results/{ID}/image0.jpg"}
+
+@router.post("/infer-video", summary='Detect pistol in video and return json', response_description="Something here")
+async def pistol_detection_infer_json(file: UploadFile = File(...)):
+    input_video , filename = get_video_from_bytes(file)
+    detector = OD (capture_index = filename, model = model)
+    video_path = detector()
+    return {"video": video_path}

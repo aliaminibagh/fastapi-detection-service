@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter, File
 
-from ..files.utils import get_image_with_cv2
+from ..files.utils_local import get_image_with_cv2
 
 router = APIRouter(
     prefix="/plate",
