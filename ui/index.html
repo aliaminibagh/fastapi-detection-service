@@ -24,11 +24,10 @@
             <div class="rows">
                 <div class="row">
                     <form action="/api/save_file" method="post" name="f1" id="f1">
-                        <label for="file" class="custom-file-upload" style="font-family: ;">
-                             انتخاب فایل
-                        </label>
-                        <input type="file" required name="file" id="file">
-                        <!-- <input type="submit" value="Submit"> -->
+                        <input type="file" id="file" multiple required required name="file">
+                        <label for="file" class="custom-file-upload"">
+                            انتخاب فایل</label>
+                            <div id="file-upload-filename"></div>
                     </form>
                 </div>
                 <div class="row" id="tabs-with-content" style="margin-top: 50px">
@@ -81,7 +80,8 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 50px">
-                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered" style="font-family: vazir;">نمایش
+                    <button id="RunButton" name="RunButton" class="button is-success is-active is-centered"
+                        style="font-family: vazir;">نمایش
                         خروجی</button>
                 </div>
 
@@ -91,8 +91,8 @@
                             <img name="resultbox" id="resultbox">
                         </div>
                         <div class="column">
-                            <textarea id="jsonbox"  style="direction: ltr; width: 100%; height: 100% " placeholder="در این قسمت خروجی مدل با فرمت json نمایش داده می شود" >
-                            </textarea>
+                            <textarea id="jsonbox" style="direction: rtl; width: 100%; height: 100% "
+                                placeholder="در این قسمت خروجی مدل با فرمت json نمایش داده می شود."></textarea>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,11 @@
 $(document).ready(function () {
+    $('#file').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#file')[0].files[0].name;
+        $(this).prev('label').text(file);
+      });
 
+    
     // create a list of URLs
     var urls = [
         '/api/knife/infer-image',
@@ -83,6 +89,22 @@ $(document).ready(function () {
 
     });
 
+var input = document.getElementById( 'file' );
+var infoArea = document.getElementById( 'file-upload-filename' );
+
+input.addEventListener( 'change', showFileName );
+
+function showFileName( event ) {
+  
+  // the change event gives us the input it occurred in 
+  var input = event.srcElement;
+  
+  // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+  var fileName = input.files[0].name;
+  
+  // use fileName however fits your app best, i.e. add it into a div
+  infoArea.textContent = 'اسم فایل : ' + fileName;
+}
 
     let tabsWithContent = (function () {
         let tabs = document.querySelectorAll('.tabs li');
@@ -123,3 +145,4 @@ $(document).ready(function () {
     })();
 
 });
+
