@@ -17,7 +17,7 @@ $(document).ready(function () {
         '/api/human/infer-image',
         '/api/yolov8/infer-image',
         '/api/face/infer-image',
-        '/api/Plate/infer-image'
+        '/api/plate/infer-image'
     ]
     selectedApi = urls[0];
 

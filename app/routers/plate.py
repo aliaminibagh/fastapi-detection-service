@@ -11,7 +11,7 @@ router = APIRouter(
 @router.post("/infer-image")
 async def plate_detection_infer_image(file: bytes = File(...)):
     input_image = get_image_with_cv2(file)
-    return {"result": "ok"}
+    return {"result": "همه چی داره خوب کار میکنه ! من فقط منتظر یک جواب از طرف سرور برای نمایش هستم."}
 
 
 
