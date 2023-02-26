@@ -68,15 +68,15 @@ def get_result_video(binary_video, model):
     print(f"Number of frames: {video.get(cv2.CAP_PROP_FRAME_COUNT)}")
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     ID = uuid.uuid4()
-    print(f"ID: {ID}")
     out = cv2.VideoWriter(f"./ui/results/{ID}.mp4", fourcc, fps, (width, height))
     count = 0
     while video.isOpened():
         ret, frame = video.read()
         if ret:
             count += 1
-            print(100 * "-")
-            print(f"Frame: {count}")
+            if count % 100 == 0:
+                print(100 * "-")
+                print(f"Frame: {count}")
             boxes, scores, classes, num = model.processFrame(frame)
             result = draw_bounding_box_on_image(frame, boxes, scores, classes)
             out.write(result)
@@ -85,4 +85,5 @@ def get_result_video(binary_video, model):
             break
     video.release()
     out.release()
+    print("video saved to ", f"./ui/results/{ID}.mp4")
     return f'/results/{ID}.mp4'

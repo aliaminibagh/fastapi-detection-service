@@ -68,6 +68,9 @@ $(document).ready(function () {
         // //}
 
         // if isvideo radio button is checked, change selectedApi to /api/video, else change it to /api/image
+        
+        
+
 
         $.ajax({
             type: "POST",
@@ -92,6 +95,7 @@ $(document).ready(function () {
                 else {
                     $("#videobox").attr("src", "");
                     $("#resultbox").attr("src", data.image);
+                    $("#jsonbox").val(JSON.stringify(data.result));
                 }
 
                 // $("#resultbox").attr("src", data.image);

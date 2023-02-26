@@ -45,15 +45,16 @@ def get_result_video(binary_video, emotion_model, idx_to_class, test_transforms,
     print(f"Number of frames: {video.get(cv2.CAP_PROP_FRAME_COUNT)}")
     # create a video writer
     ID = uuid.uuid4()
-    print(ID)
+    
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(
         f'./ui/results/{ID}.mp4', fourcc, fps, (width, height))
     count = 0
     while video.isOpened():
         count += 1
-        print(100 * "-")
-        print(f"Frame {count}")
+        if count % 100 == 0:
+            print(100 * "-")
+            print(f"Frame {count}")
         ret, frame = video.read()
         if ret:
             _, image = infer_emotions(
@@ -63,5 +64,5 @@ def get_result_video(binary_video, emotion_model, idx_to_class, test_transforms,
             break
     video.release()
     out.release()
-    # return path of result video
+    print("video saved to : ", f'./ui/results/{ID}.mp4')
     return f'/results/{ID}.mp4'
