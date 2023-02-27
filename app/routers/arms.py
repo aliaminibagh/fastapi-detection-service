@@ -25,10 +25,12 @@ async def pistol_detection_infer_json(file: bytes = File(...)):
     results.render()
     ID = uuid.uuid4()
     results.save(save_dir=f"./ui/results/{ID}")
+    if len(detect_res) == 0:
+        return {"result" : "در تصویر اسلحه یافت نشد.", "image": f"/results/{ID}/image0.jpg"}
     return {"result": detect_res, "image": f"/results/{ID}/image0.jpg"}
 
 @router.post("/infer-video", summary='Detect pistol in video and return json', response_description="Something here")
-async def pistol_detection_infer_json(file: UploadFile = File(...)):
+async def pistol_detection_infer_video(file: UploadFile = File(...)):
     input_video , filename = get_video_from_bytes(file)
     detector = OD (capture_index = filename, model_name= "arms")
     video_path = detector()

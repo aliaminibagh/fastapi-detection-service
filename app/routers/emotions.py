@@ -43,7 +43,7 @@ async def emotion_detection_infer_json(file: bytes = File(...)):
     results, image = infer_emotions(
         input_image, emotion_model, idx_to_class, test_transforms, device, detector)
     if len(results) == 0:
-        return {"message": "No faces detected"}
+        return {"result": "چهره ای در تصویر برای عملیات تشخیص احساسات یافت نشده است"}
     else:
         ID = uuid.uuid4()
         cv.imwrite(f"./ui/results/{ID}.jpg", image)

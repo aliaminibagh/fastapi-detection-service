@@ -19,7 +19,7 @@ def get_yolov5(name):
 
 def get_yolov8(name="yolov8x"):
     # local model
-    if name == "mokes":
+    if name == "smoke":
         model = YOLO('./app/files/model/smoke.pt')
     elif name == "yolov8n":
         model = YOLO('./app/files/model/yolov8n.pt')

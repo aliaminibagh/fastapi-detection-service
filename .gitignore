@@ -5,6 +5,7 @@ __pycache__/
 
 #Files
 *.pt
+*.h5
 *.mp4
 app/files/models/frozen_inference_graph.pb
 ui/results/*

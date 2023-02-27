@@ -25,10 +25,12 @@ async def human_detection_infer_json(file: bytes = File(...)):
     result = draw_bounding_box_on_image(input_image, boxes, scores, classes)
     ID = uuid.uuid4()
     cv.imwrite(f"./ui/results/{ID}.jpg", result)
+    if num == 0:
+        return {"result": "در تصویر شخصی یافت نشد", "image": f"/results/{ID}.jpg"}
     return {"result": [{'x_min': int(box[0]), 'y_min': int(box[1]), 'x_max': int(box[2]), 'y_max': int(box[3]), 'confidence': round(float(score), 3), 'name': 'person'} for box, score in zip(boxes[:num], scores[:num]) if score > 0.7], "image": f"/results/{ID}.jpg"}
 
 
 @router.post("/infer-video", summary='Detect humans in video and return json', response_description="Something here")
-async def human_detection_infer_json(file: UploadFile = File(...)):
+async def human_detection_infer_video(file: UploadFile = File(...)):
     video_path = get_result_video(file, human_model)
     return {"video": video_path}

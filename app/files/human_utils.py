@@ -66,7 +66,7 @@ def get_result_video(binary_video, model):
     
     # print number of frames in video
     print(f"Number of frames: {video.get(cv2.CAP_PROP_FRAME_COUNT)}")
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'H264')
     ID = uuid.uuid4()
     out = cv2.VideoWriter(f"./ui/results/{ID}.mp4", fourcc, fps, (width, height))
     count = 0
@@ -74,7 +74,7 @@ def get_result_video(binary_video, model):
         ret, frame = video.read()
         if ret:
             count += 1
-            if count % 100 == 0:
+            if count % 10 == 0:
                 print(100 * "-")
                 print(f"Frame: {count}")
             boxes, scores, classes, num = model.processFrame(frame)

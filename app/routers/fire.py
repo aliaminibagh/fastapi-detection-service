@@ -28,11 +28,13 @@ async def fire_detection_infer_json(file: bytes = File(...)):
     results.render()
     ID = uuid.uuid4()
     results.save(save_dir=f"./ui/results/{ID}")
+    if len(detect_res) == 0:
+        return {"result": "در تصویر آتش یافت نشد.", "image": f"/results/{ID}/image0.jpg"}
     return {"result": detect_res, "image": f"/results/{ID}/image0.jpg"}
 
 
 @router.post("/infer-video", summary='Detect fire in video and return json', response_description="Something here")
-async def fire_detection_infer_json(file: UploadFile = File(...)):
+async def fire_detection_infer_video(file: UploadFile = File(...)):
     input_video, filename = get_video_from_bytes(file)
     detector = OD(capture_index=filename, model_name="fire")
     video_path = detector()

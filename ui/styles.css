@@ -23,13 +23,14 @@ input:focus+label {
   outline: 2px solid;
 }
 
-.custom-file-upload {
+.custom-file-upload, #RunButton{
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
   border: 1px dashed #BBB;
   text-align: center;
   background-color: #DDD;
+  color: black;
 }
 
 .custom-file-upload:hover,
@@ -38,6 +39,9 @@ input:focus+label {
   color: white;
 }
 
+input[type="radio"] {
+  margin: 0.4rem;
+}
 
 
 @font-face {
@@ -61,5 +65,5 @@ body {
 }
 
 textarea {
-  color: rgb(189, 36, 36);
+  color: rgb(37, 26, 26);
 }

@@ -33,7 +33,8 @@ def infer_emotions(image, emotion_model, idx_to_class, test_transforms, device, 
     for em in emotion_list:
         faces[counter]["emotion"] = em
         counter += 1
-
+    if len(faces) == 0:
+        return [], image
     return faces, image_bboxes
 
 def get_result_video(binary_video, emotion_model, idx_to_class, test_transforms, device, detector):
@@ -46,13 +47,13 @@ def get_result_video(binary_video, emotion_model, idx_to_class, test_transforms,
     # create a video writer
     ID = uuid.uuid4()
     
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'H264')
     out = cv2.VideoWriter(
         f'./ui/results/{ID}.mp4', fourcc, fps, (width, height))
     count = 0
     while video.isOpened():
         count += 1
-        if count % 100 == 0:
+        if count % 10 == 0:
             print(100 * "-")
             print(f"Frame {count}")
         ret, frame = video.read()
