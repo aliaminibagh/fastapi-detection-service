@@ -3,13 +3,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+app/files/dataset/
+app/files/wandb/
+app/files/MobileV2_50_5_1_0001_0006_newdata_3Layer/
 #Files
 *.pt
 *.h5
 *.mp4
+*.jpg
+*.avi
+*.mpg
+*.ipynb
 app/files/models/frozen_inference_graph.pb
 ui/results/*
-
+app/files/dataset/*
 ui/fonts/*.zip
 # C extensions
 *.so
