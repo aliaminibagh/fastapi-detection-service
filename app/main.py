@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from .routers import arms, emotions, fight, fire, human, knife, smoke
 
 from .routers import plate, face, yolov8
+from .routers import text
 
 api_app = FastAPI(
     # middleware=middleware,
@@ -27,6 +28,7 @@ api_app.include_router(smoke.router)
 api_app.include_router(plate.router)
 api_app.include_router(face.router)
 api_app.include_router(yolov8.router)
+api_app.include_router(text.router)
 
 # origins = ["*"]
 

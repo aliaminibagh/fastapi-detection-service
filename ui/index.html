@@ -1,148 +1,227 @@
 <!DOCTYPE html>
 <html lang="fa-IR" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vision Services</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
-        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="ui.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
+  <body>
     <div class="columns" style="margin-top: 50px">
-        <div class="column">
-
-        </div>
-        <div class="column" id="column-orginal">
-            <div class="rows">
-                <div class="row">
-                    <form action="/api/save_file" method="post" name="f1" id="f1">
-                        <input type="file" id="file" multiple required required name="file">
-                        <label for="file" class="custom-file-upload"">
-                            انتخاب فایل</label>
-                            <div id=" file-upload-filename" style="margin-bottom: 5%">
-                </div>
-                </form>
+      <div class="column"></div>
+      <div class="column" id="column-orginal">
+        <div class="rows">
+            <div class="row">
                 <form>
-                    <fieldset>
-                        <legend>نوع فایل ورودی جهت پردازش را انتخاب کنید:</legend>
-                        <div>
-                            <input type="radio" id="isvideo" name="fav_language" value="isvideo">
-                            <label for="isvideo">Video</label><br>
-                            <input type="radio" id="isimage" name="fav_language" value="isiamge" checked>
-                            <label for="isimage">Image</label><br>
-                        </div>
-                    </fieldset>
+                  <fieldset>
+                    <legend>نوع فایل ورودی جهت پردازش را انتخاب کنید:</legend>
+                    <div>
+                      <input
+                        type="radio"
+                        id="isvideo"
+                        name="fav_language"
+                        value="isvideo"
+                      />
+                      <label for="isvideo">Video</label><br />
+                      <input
+                        type="radio"
+                        id="isimage"
+                        name="fav_language"
+                        value="isiamge"
+                        checked
+                      />
+                      <label for="isimage">Image</label><br />
+                      <input
+                        type="radio"
+                        id="istext"
+                        name="fav_language"
+                        value="istext"
+                      />
+                      <label for="istext">Text</label><br />
+                    </div>
+                  </fieldset>
                 </form>
-            </div>
-            <div class="row" id="tabs-with-content" style="margin-top: 50px">
-                <div class="tabs is-centered">
-                    <ul>
-                        <li class="is-active"><a>چاقو</a></li>
-                        <li><a>اسلحه</a></li>
-                        <li><a>درگیری</a></li>
-                        <li><a>آتش</a></li>
-                        <li><a>دود</a></li>
-                        <li><a>احساسات</a></li>
-                        <li><a>تشخیص انسان</a></li>
-                        <li><a>تشخیص اشیاء</a></li>
-                        <li><a>تشخیص چهره</a></li>
-                        <li><a>تشخیص پلاک</a></li>
-                    </ul>
-                </div>
-                <div dir="rtl" style="color: red; font-size: 20px">
-                    <section class="tab-content">مدل تشخیص چاقو
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص چاقو
-                            محل قرارگیری چاقو را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص اسلحه
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص اسلحه
-                            محل قرارگیری سلاح های کمری را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص درگیری
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص درگیری
-                            ,وجود درگیری را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص آتش
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص آتش
-                            ,وجود آتش را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص دود
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص دود
-                            ,وجود دود را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص احساسات
-                        <div style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص
-                            احساسات ,احساسات مربوط به چهره هر فرد در تصویر مشخص کرد. این احساسات در 7 دسته مختلف شامل
-                            دسته های زیر خواهند بود :
-                            <ol>
-                                <li>خوشحال</li>
-                                <li>ناراحت</li>
-                                <li>چندش آور</li>
-                                <li>ترس</li>
-                                <li>تعجب</li>
-                                <li>غمگین</li>
-                                <li>خنثی</li>
-
-                            </ol>
-                        </div>
-                    </section>
-                    <section class="tab-content">مدل تشخیص انسان
-                        <p style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص انسان
-                            ,وجود انسان را در تصویر مشخص کرد.</p>
-                    </section>
-                    <section class="tab-content">مدل تشخیص اشیاء
-                        <div style="color: black;font-size: 15px; ">در این قسمت می توان با استفاده از مدل تشخیص اشیاء،
-                            می توان موقعیت اشیاء مختلف موجود در تصویر را رصد نمود. از جمله اشیاء قابل تشخیص توسط این مدل
-                            می توان به موارد زیر اشاره نمود :
-                            <ul style="list-style-type: square">
-                                <li>وسیله نقلیه</li>
-                                <li>موبایل</li>
-                                <li>کتاب</li>
-                                <li>تلویزیون</li>
-                                <li>صندلی</li>
-                                <li>میز</li>
-                                <li>موتور سیکلت</li>
-                                <li>حیوانات مختلف</li>
-                            </ul>
-                        </div>
-                    </section>
-                    <section class="tab-content">مدل تشخیص چهره</section>
-                    <section class="tab-content">مدل تشخیص پلاک</section>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 20px">
-                <button id="RunButton" name="RunButton" class="button is-success is-active is-centered"
-                    style="font-family: vazir;">نمایش
-                    خروجی</button>
-            </div>
-
-            <div class="row" style="margin-top: 20px">
-                <div class="columns">
-                    <div class="column">
-                        <img name="resultbox" id="resultbox">
-                        <video controls name="videobox" id="videobox" style="width: 100%; height: 100%;">
-                    </div>
-                    <div class="column">
-                        <textarea id="jsonbox" style="direction: rtl; width: 100%; height: 100% ; margin-top: 5%;"
-                            placeholder="در این قسمت در صورت انتخاب تصویر، خروجی مدل با فرمت json نمایش داده می شود."></textarea>
-                    </div>
-                </div>
-            </div>
+              </div>
         </div>
-    </div>
-    <div class="column">
+        <div id="textRow" class="row" style="display: none">
+          <div class="row">
+            <form id="text_form" name="text_form">
+              <textarea name="text" id="text" style="width: 100%;"> Hola </textarea>
+            </form>
+          
+            <button id="post_to_text_api">
+              Send
+            </button>
+          </div>
+          <div class="row">
+            <textarea name="text_result" id="text_result" style="width: 100%;"> </textarea>
+        </div>
+        </div>
+        
+        <div id="OurApis" class="rows">
+            <form action="/api/save_file" method="post" name="f1" id="f1">
+                <input
+                  type="file"
+                  id="file"
+                  multiple
+                  required
+                  required
+                  name="file"
+                />
+                <label for="file" class="custom-file-upload"> انتخاب فایل</label>
+                <div id=" file-upload-filename" style="margin-bottom: 5%"></div>
+              </form>
+          <div class="row" id="tabs-with-content" style="margin-top: 50px">
+            <div class="tabs is-centered">
+              <ul>
+                <li class="is-active"><a>چاقو</a></li>
+                <li><a>اسلحه</a></li>
+                <li><a>درگیری</a></li>
+                <li><a>آتش</a></li>
+                <li><a>دود</a></li>
+                <li><a>احساسات</a></li>
+                <li><a>تشخیص انسان</a></li>
+                <li><a>تشخیص اشیاء</a></li>
+                <li><a>تشخیص چهره</a></li>
+                <li><a>تشخیص پلاک</a></li>
+              </ul>
+            </div>
+            <div dir="rtl" style="color: red; font-size: 20px">
+              <section class="tab-content">
+                مدل تشخیص چاقو
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص چاقو محل قرارگیری
+                  چاقو را در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص اسلحه
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص اسلحه محل قرارگیری
+                  سلاح های کمری را در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص درگیری
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص درگیری ,وجود
+                  درگیری را در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص آتش
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص آتش ,وجود آتش را
+                  در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص دود
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص دود ,وجود دود را
+                  در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص احساسات
+                <div style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص احساسات ,احساسات
+                  مربوط به چهره هر فرد در تصویر مشخص کرد. این احساسات در 7 دسته
+                  مختلف شامل دسته های زیر خواهند بود :
+                  <ol>
+                    <li>خوشحال</li>
+                    <li>ناراحت</li>
+                    <li>چندش آور</li>
+                    <li>ترس</li>
+                    <li>تعجب</li>
+                    <li>غمگین</li>
+                    <li>خنثی</li>
+                  </ol>
+                </div>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص انسان
+                <p style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص انسان ,وجود انسان
+                  را در تصویر مشخص کرد.
+                </p>
+              </section>
+              <section class="tab-content">
+                مدل تشخیص اشیاء
+                <div style="color: black; font-size: 15px">
+                  در این قسمت می توان با استفاده از مدل تشخیص اشیاء، می توان
+                  موقعیت اشیاء مختلف موجود در تصویر را رصد نمود. از جمله اشیاء
+                  قابل تشخیص توسط این مدل می توان به موارد زیر اشاره نمود :
+                  <ul style="list-style-type: square">
+                    <li>وسیله نقلیه</li>
+                    <li>موبایل</li>
+                    <li>کتاب</li>
+                    <li>تلویزیون</li>
+                    <li>صندلی</li>
+                    <li>میز</li>
+                    <li>موتور سیکلت</li>
+                    <li>حیوانات مختلف</li>
+                  </ul>
+                </div>
+              </section>
+              <section class="tab-content">مدل تشخیص چهره</section>
+              <section class="tab-content">مدل تشخیص پلاک</section>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <button
+              id="RunButton"
+              name="RunButton"
+              class="button is-success is-active is-centered"
+              style="font-family: vazir"
+            >
+              نمایش خروجی
+            </button>
+          </div>
 
+          <div class="row" style="margin-top: 20px">
+            <div class="columns">
+              <div class="column">
+                <img name="resultbox" id="resultbox" style="display: none;" />
+                <video
+                  controls
+                  name="videobox"
+                  id="videobox"
+                  style="width: 100%; height: 100%; display: none;"
+                ></video>
+              </div>
+              <div class="column">
+                <textarea
+                  id="jsonbox"
+                  style="
+                    direction: rtl;
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                  "
+                  placeholder="در این قسمت در صورت انتخاب تصویر، خروجی مدل با فرمت json نمایش داده می شود."
+                >
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column"></div>
     </div>
-    </div>
-</body>
-
-
+  </body>
 </html>
