@@ -31,8 +31,8 @@ async def smoke_detection_infer_json(file: bytes = File(...)):
             cv2.rectangle(input_image, (int(box.data[0][0]) , int(box.data[0][1])), (int(box.data[0][2]), int(box.data[0][3])), (36, 255, 12), 2)
             cv2.putText(input_image, idx_to_class[int(box.data[0][5])], (int(box.data[0][0] + 10), int(box.data[0][1]+20)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
     cv2.imwrite(f"./ui/results/{ID}.jpg", input_image)
-    if idx_to_class[int(box.data[0][5])] == "default":
-        return {"result" : "در تصویر ارائه شده اثری از دود یا آتش مشاهده نشده است", "image": f"/results/{ID}.jpg"}
+    # if idx_to_class[int(box.data[0][5])] == "default":
+    #     return {"result" : "در تصویر ارائه شده اثری از دود یا آتش مشاهده نشده است", "image": f"/results/{ID}.jpg"}
     return {"result": [{"x_min": int(box.data[0][0]), "y_min": int(box.data[0][1]), "x_max": int(box.data[0][2]), "y_max": int(box.data[0][3]), "conf": round(float(box.data[0][4]), 3), "class": idx_to_class[int(box.data[0][5])]} for box in boxes], "image": f"/results/{ID}.jpg"}
 
 
