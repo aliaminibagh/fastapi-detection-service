@@ -23,7 +23,7 @@ input:focus+label {
   outline: 2px solid;
 }
 
-.custom-file-upload, #RunButton{
+.custom-file-upload, #RunButton, #post_to_text_api{
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
@@ -34,7 +34,7 @@ input:focus+label {
 }
 
 .custom-file-upload:hover,
-#RunButton:hover {
+#RunButton:hover , #post_to_text_api:hover {
   background-color: rgb(56, 66, 65);
   color: white;
 }
