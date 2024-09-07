@@ -29,7 +29,7 @@ Future updates will also integrate **text** and **speech recognition** capabilit
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/fastapi-detection-service.git
+    git clone https://github.com/aliaminibagh/fastapi-detection-service.git
     cd fastapi-detection-service
     ```
 
